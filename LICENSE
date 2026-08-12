@@ -1,0 +1,49 @@
+# License · 许可证
+
+本仓库采用双许可(dual license),按内容用途分两类:
+
+## 说明性文档 · CC BY 4.0
+
+以下内容按 [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) 授权:
+
+- `README.md`
+- `docs/` 下全部文档
+- `examples/` 下全部走查示例
+
+你可以自由转载、改编、翻译,含商业用途;条件是:**署名**(注明来源
+`tsuru0805/idea-to-merge` 并附仓库链接 https://github.com/tsuru0805/idea-to-merge )、
+**标明许可证**(注明 CC BY 4.0 并附许可证链接)、**若做了修改须注明**。
+完整条件以 [许可证原文](https://creativecommons.org/licenses/by/4.0/legalcode) 为准。
+
+**例外**:上述文档中出现的命令示例、代码片段、prompt 模板,**同时**按下面的
+MIT License 授权——拷进你的项目时可任选按 MIT 处理,不受 CC BY 署名条件约束。
+
+## 拷走即用的件 · MIT
+
+以下内容按 [MIT License](./LICENSE-CODE) 授权:
+
+- `templates/` 下全部模板(工单 / handoff / review checklist / skill 骨架)
+- `conventions/` 下全部规约(红线 / 裁决格式 / 真值层级——设计上就是给你抄进项目的)
+- `AGENTS.md`、`for-claude-code.md`(拷进你项目根目录的机读件)
+- 全仓文档中出现的命令示例、代码片段、prompt 模板(即上一节的例外项)
+
+MIT 意味着:可以拷进你自己的项目(含私有 / 商业项目)使用、修改、再分发;
+复制全部或实质性部分时,保留 [LICENSE-CODE](./LICENSE-CODE) 中的版权声明与许可声明即可,
+无需额外公开鸣谢。完整条款以 [LICENSE-CODE](./LICENSE-CODE) 为准。
+
+## 本文件与 LICENSE-CODE
+
+`LICENSE` 与 `LICENSE-CODE` 是许可声明文件本身,随上述内容一同分发时原样保留即可。
+
+---
+
+*English summary*: Narrative documentation (`README.md`, `docs/`, `examples/`) is
+licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — attribution,
+license notice, and indication of changes required; see the license text for full terms.
+Copy-into-your-project files (`templates/`, `conventions/`, `AGENTS.md`,
+`for-claude-code.md`) are licensed under the [MIT License](./LICENSE-CODE). Command
+examples, code snippets, and prompt templates appearing inside the documentation are
+additionally licensed under MIT, at your option. `LICENSE` and `LICENSE-CODE` are
+license notice files; keep them intact when redistributing.
+Recommended attribution: "idea-to-merge" by tsuru0805
+(https://github.com/tsuru0805/idea-to-merge).
