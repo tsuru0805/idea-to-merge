@@ -2,6 +2,11 @@
 
 你跟 Claude Code(下面叫 **CC**)结对写代码。这个仓库讲:**一个想法从说出口,到代码合并、上线、验收、关单,中间该走哪些流程,才能又快又不失控。** 内容来自一个 24/7 跑在 Mac mini 上的个人系统,每条规矩背后都是一次真实翻车。
 
+![全线图 · 一个想法的一生:十站从想法到关单(这件事结束);三处由你点头才放行(提案批准、收工批准、体感验收);上线前有自动检查拦着;验证或体感没过,就回到第 5 站「实现」重来](docs/img/overview.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart TD
     A["想法"] --> B["复述确认"]
@@ -16,6 +21,8 @@ flowchart TD
     I -->|不过| E
     I --> J(["关单"])
 ```
+
+</details>
 
 ### 👉 最干货的部分从这里读:[一个想法的一生](docs/idea-to-merge.md#ⅰ--一个想法的一生)
 
@@ -79,3 +86,5 @@ flowchart TD
 双许可:说明性文档(`README` / `docs/` / `examples/`)按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权(转载改编请署名、附许可链接、注明修改);
 为拷进你项目而设计的件(`templates/` / `conventions/` / `AGENTS.md` / `for-claude-code.md`)按 [MIT](./LICENSE-CODE) 授权,文档中的代码片段、命令示例、prompt 模板也可另按 MIT 使用——拿走就用。
 完整口径见 [LICENSE](./LICENSE)。
+
+流程图图片(`docs/img/`)里用到的字体均为 SIL Open Font License 授权:Big Shoulders Display、Martian Mono、Noto Serif SC(思源宋体)。仓库只收渲染好的图片,不分发字体文件。

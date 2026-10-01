@@ -15,6 +15,11 @@
 
 先看这一张就够了;下面六组图,每组先给一张小图说「这张图在讲什么」,详细流程折叠在「展开」里。
 
+![全线图 · 一个想法的一生:十站从想法到关单(这件事结束);三处由你点头才放行;上线前有自动检查拦着;验证或体感没过,就回到第 5 站「实现」重来](img/overview.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart TD
     A["想法"] --> B["复述确认"]
@@ -31,6 +36,8 @@ flowchart TD
     I --> J(["关单"])
 ```
 
+</details>
+
 - **三个回退**:审查打回、三层验证不齐、人验体感不过,都回到实现。
 - **两个人类节点**画在这里;完整版里还有提案批准、发车许可等,在下面的详细图里。
 
@@ -39,6 +46,11 @@ flowchart TD
 ## ① 总览:从想法到关单
 
 这张图讲:一个想法从提出到关单,中间有三个人类节点,每一道审查都可能把活打回去。
+
+![LINE 01 · 三处只有你能做决定:想法与复述、方案(另一个 AI 先审)、提案批准、实现(写完再审)、收工批准、上线与验证、体感验收;体感没过回到实现](img/line-01-gates.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
 
 ```mermaid
 flowchart LR
@@ -50,6 +62,8 @@ flowchart LR
     F --> G{"🚪 体感验收"}
     G -->|不过| D
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
@@ -128,6 +142,11 @@ flowchart TD
 
 这张图讲:一个执行棒接到派单后,自己从核查走到交货的全过程。
 
+![LINE 02 · 一个干活的窗口怎么干活:读派单、先查有没有做过并认领、复述确认、方案(先审)、实现与测试、交给另一个 AI 审、交给统筹窗口;审查打回就回去改](img/line-02-baton.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart LR
     A["读派单"] --> B["纠漂 · 认领"]
@@ -138,6 +157,8 @@ flowchart LR
     F -->|打回| E
     F --> G["交货给统筹"]
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
@@ -212,6 +233,11 @@ flowchart TD
 
 这张图讲:总调度先汇报再派活,之后循环处理各棒发来的消息,并且独占合入和发布。
 
+![LINE 03 · 统筹窗口怎么管多个窗口:接手先汇报、派单、收消息、判断并回复、合入与发布(只有统筹窗口能做)、收工交接(写清谁还在干活);回完一条接着收下一条](img/line-03-dispatch.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart LR
     A["接棒先汇报"] --> B["派单"]
@@ -221,6 +247,8 @@ flowchart LR
     D --> E["🛡 合入 · 发布"]
     E --> F["收工交接"]
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
@@ -322,6 +350,11 @@ flowchart TD
 
 这张图讲:按部署代价选窗口,拿到许可、过守卫后才装载,装上后按三层核实。
 
+![LINE 04 · 怎么上线:选时间窗口、你这一次的许可、自动检查、装上去、三层验证、第二天复查、交给你看体感;自动检查拦下就重新选窗口](img/line-04-departure.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart LR
     A["选窗口"] --> B{"🚪 当次许可"}
@@ -332,6 +365,8 @@ flowchart LR
     E --> F["晨验"]
     F --> G["待体感验收"]
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
@@ -389,6 +424,11 @@ flowchart TD
 
 这张图讲:一次事故怎样变成一条再也不会被踩第二次的规则。
 
+![LINE 05 · 踩坑以后怎么防复发:事故先停手、止血、查病根、写成可测的规则、做成自动检查、收工自查、维护规则;又犯就回去查病根](img/line-05-never-twice.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart LR
     A["事故 · 停手"] --> B["止血"]
@@ -399,6 +439,8 @@ flowchart LR
     F --> G["维护规则"]
     F -->|又犯| C
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
@@ -455,6 +497,11 @@ flowchart TD
 
 这张图讲:收工先自查范围和装载,再写文档、过守卫、整批递审,最后才提交。
 
+![LINE 06 · 怎么收工:查答应的有没有缩水、查等上线的有没有排上、写交接、检查看板、更新各文档、整批交给另一个 AI 审、提交推送、收工总结;审查打回就回去改文档](img/line-06-closing.png)
+
+<details>
+<summary>这张图的文字版(给 agent / 读屏)</summary>
+
 ```mermaid
 flowchart LR
     A["范围守恒"] --> B["装载守恒"]
@@ -466,6 +513,8 @@ flowchart LR
     F --> G["提交推送"]
     G --> H["收工总结"]
 ```
+
+</details>
 
 <details>
 <summary>展开详细流程（给 agent / 想看细节的人）</summary>
