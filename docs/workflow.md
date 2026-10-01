@@ -64,7 +64,7 @@ Reviewer 的回执**要核查、不无脑同意**——Builder 觉得它判断�
 Builder 向你汇报:做了什么、核了什么、**哪些没核**(用[完成层级](../conventions/truth-hierarchy.md)说清,别把「代码写完」说成「跑通了」)。
 **你说收工**,Builder 走[收工 checklist](../templates/skill-shutdown.md):范围守恒自查、装载守恒自查、写 **handoff**(见 [`../templates/handoff.md`](../templates/handoff.md))、刷看板、更新工单……
 
-然后**这一整批收工文档(handoff + 看板改动 + 工单登记段)再过一次 Reviewer**——handoff 最容易把「打算修的」写成「已修」、把没验证的写成闭环;看板和工单最容易留下第二份会漂的副本。**没有免审例外**,「纯文档、低风险」不是跳过的理由。过了,才 commit / push / 合并。
+然后**这一整批收工文档(handoff + 看板改动 + 工单登记段)再过一次 Reviewer**——handoff 最容易把「打算修的」写成「已修」、把没验证的写成闭环;看板和工单最容易留下第二份会漂的副本。**没有免审例外**,「纯文档、低风险」不是跳过的理由。过了,才 commit / push / 合并。(有自动部署——合并即上线——的项目,这里只 push 分支、不合并;合并走[全景文档 7.1](idea-to-merge.md#71-合并--部署按部署成本选窗口)第三档:登记货单 → 当次许可 → 守卫 → 合并。)
 
 > 这一步和[全景文档的收工 checklist](idea-to-merge.md#73-收工-checklist)是同一件事:那边的「第 7 步 · 收工文档整批递审」就是这里的「再过一次 Reviewer」,顺序都是**先审、后推**。
 

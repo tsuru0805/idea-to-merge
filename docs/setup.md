@@ -15,8 +15,8 @@ Codex 是 OpenAI 的命令行 agent。常见装法:
 # npm
 npm install -g @openai/codex
 
-# 或 Homebrew(macOS)
-brew install codex
+# 或 Homebrew(macOS,Codex 是 cask)
+brew install --cask codex
 ```
 
 装完确认:
@@ -32,7 +32,15 @@ codex --help
 
 ## 2. 关键机制:Codex 自动读 `AGENTS.md`
 
-这是整套工作流能成立的根:**Codex 会读取工作目录里的 `AGENTS.md`,把它当成项目级系统规则**(此行为以你当前 CLI 版本为准,可用 `codex exec --help` 或官方文档确认)。
+这是整套工作流能成立的根:**Codex 启动时会读取 `AGENTS.md`,当成指令拼进上下文**(`codex exec` 同样会读)。按 Codex 官方文档,读取范围是:
+
+1. **全局**:Codex 主目录(默认 `~/.codex`,可用 `CODEX_HOME` 改)里的 `AGENTS.override.md`,没有就读 `AGENTS.md`;
+2. **项目**:从 **Git 根目录一路往下到当前工作目录**,每一层先找 `AGENTS.override.md`,再找 `AGENTS.md`;
+3. **合并**:从根往下按顺序拼接,离当前目录越近的越靠后、优先级越高;合计超过 `project_doc_max_bytes`(默认 32 KiB)后面的就不再加。
+
+想确认这一次到底读了哪些文件,可以跑 `codex exec "List active instruction sources" < /dev/null`。
+
+> ⚠️ **反方向的坑**:新版 Claude Code 在项目里**没有 CLAUDE.md** 时,也会把 `AGENTS.md` 当成自己的项目说明来读。本仓的 `AGENTS.md` 是**审查方专用**规约,不该被做工方当成自己的规矩——如果你的项目没有 CLAUDE.md,放一个就行(有 CLAUDE.md 时 Claude Code 默认只读 CLAUDE.md)。
 
 所以你**不需要**每次把一长串审查规则塞进 prompt——只要:
 
@@ -106,6 +114,8 @@ git diff --staged | codex exec --sandbox read-only \
 ```
 
 读回裁决 → 是「阻断 / 需改后通过」就改 → 再审 → 「通过」后把要点写进 commit message。
+
+> 另一个选择:新版 CLI 有专门的 `codex exec review` 子命令(`--uncommitted` 审工作区改动、`--base <分支>` 审相对某分支的改动,可以跟一段自定义审查要求)。具体参数以你本机 `codex exec review --help` 为准。
 
 ---
 

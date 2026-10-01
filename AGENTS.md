@@ -109,9 +109,10 @@ When reviewing handoff or current-state drafts, **reject or request correction**
 - Unverified work is written as closed-loop completion.
 - User-feel verification is claimed before the user has verified.
 - The same agent writes and reviews its own claims as if independently verified.
-- "Loaded" / "live" is claimed without all three layers of evidence: process start time
-  after the deploy, every repo's HEAD equal to the pinned commit, and one real production
-  output per shipped item.
+- "Loaded" is claimed without both the process layer (process start time after the
+  deploy) and the code layer (every repo's HEAD equal to the pinned commit); or "live" /
+  "in effect" is claimed without, in addition, the output layer (one real production
+  output per shipped item).
 - Simulator / test verification is written as user verification; a prime suspect is written
   as a confirmed root cause; a candidate fix is written as a root fix.
 - A scope item that was approved earlier is silently dropped, postponed, or moved to
