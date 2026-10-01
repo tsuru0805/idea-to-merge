@@ -1,5 +1,7 @@
 # idea-to-merge · 从一个想法到合并上线的全景
 
+> 这是**进阶手册**。第一次用 Claude Code,先读[新手入门](beginner.md)。
+>
 > [互审那套](workflow.md)讲的是「一段改动怎么被审到过」。这篇讲的是它外面那整圈:
 > **一个想法从人嘴里说出来,到代码合并、部署、验收、交接,中间到底都走了哪些流程。**
 >
@@ -245,6 +247,7 @@ git 层面一条铁律:
 - 开工:`git worktree add ../<repo>.worktrees/<棒名> -b <棒名>`,所有改动、所有 commit 都发生在 worktree 里。
 - 收工:审过之后 rebase 主干、回主 checkout `merge --ff-only`、删 worktree。主 checkout 上只发生 ff 合并和部署动作,**永远不在它上面直接编辑**。
 - git 写操作一律 `git -C <worktree路径>`,不 `cd` 进仓根再跑——cd 状态是隐形的,`-C` 每条命令自带路径,错不了。
+- 也可以让 Claude Code 替你建:**CLI** 用 `claude -w <名字>`(`--worktree`),默认建在仓根的 `.claude/worktrees/<名字>/`、新分支名 `worktree-<名字>`;**桌面版**新建会话时在分支名旁边勾选 worktree 选项(默认位置相同,可在设置里改)。(按官方文档核过。)
 
 **一个大多数人想不到的坑:跑测试也算破坏性动作。** 我们家真实规矩是「主 checkout 永不跑全量测试」——因为有些代码的状态文件路径是按**模块位置**定位的(`Path(__file__).parent / "data"`),和 cwd 无关,你在哪个目录跑都写的是主 checkout 里的**生产数据**。worktree 里没有那份数据,天然免疫。如果你的项目主 checkout 同时是运行时,这条直接抄走。
 
@@ -432,6 +435,10 @@ Claude Code 的 skill 机制:`.claude/skills/<name>/SKILL.md`,frontmatter 里写
 ### 跨 session 的规矩
 
 - 动共享文件前先向其他在途 session 打招呼认领;**发消息 ≠ 认领成功,收到回执确认无撞才动手**——消息可能根本没被读到。
+- **session 之间怎么发消息**(按官方文档核过,版本更新后以官方为准):
+  - **CLI**:Claude Code v2.1.224 起(macOS / Linux / WSL 2;Windows 原生 v2.1.234 起),同一台电脑上的 session 之间可以直接发消息,默认开启;Claude 用 `ListAgents` 找对象、`SendMessage` 发送,你只要说「告诉 @某某 session ……」。输入 `/list-agents`(`/peers`)可检查功能是否可用。
+  - **桌面版**:有自己的跨会话功能,能查看并给**桌面版里的**其他会话发消息(显示为带来源的卡片),但看不到终端里的 CLI 会话;和 CLI 会话互通走上面那套通用跨会话消息。
+  - 两种都只传纯文本,不传对话历史或文件;收到消息的 session 仍按它自己的权限规则行事。
 - 契约中途变更,立刻通知受影响的棒,别等它做完再返工。
 - **在途棒正在做的活,总调度不许亲自上手重复做。** 要改方向就发消息;等不及就先停掉那个棒再接手——绝不双线改同一批文件。
 

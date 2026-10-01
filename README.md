@@ -5,9 +5,21 @@
 >
 > 内容是我们家一个真实项目(24/7 Mac mini 上的个人系统,常年多 session 并行开发)每天在跑的工作流,不是理论模板。每条规矩背后都是一次真实翻车。
 
+## 🌱 第一次用?从这里开始
+
+**→ [`docs/beginner.md`](docs/beginner.md) · 新手入门**
+
+写给没有工程背景的人:怎么跟 Claude Code 说话、怎么下需求、权限弹窗怎么点、什么时候需要 CLAUDE.md / git / 测试 / AI 互审 / 多窗口。按台阶写,每一级都说清「做到什么程度算会了、什么时候该上下一级」;还有一节讲 CLI 和桌面版怎么选。配一个 7 条规矩的[入门版 CLAUDE.md 模板](templates/CLAUDE.beginner.md)。
+
+**下面的内容都是进阶。** 等入门里的第 3 级信号出现了再来读。
+
+---
+
+## 进阶
+
 这里有三层东西,按需取用。**先说清楚:这是一个规则库,不是必须整包安装的框架**——每条规则独立成块、标好适用前提(「多 session 才需要」「有自动部署才需要」「有生产数据才需要」……),你按自己的情况挑。怎么挑,见全景文档开头的[「怎么用这个仓」](docs/idea-to-merge.md#怎么用这个仓)。
 
-## 🗺 全景:完整工作流
+## 🗺 进阶 · 全景:完整工作流
 
 **→ [`docs/idea-to-merge.md`](docs/idea-to-merge.md)**
 
@@ -50,13 +62,14 @@
 
 | 位置 | 内容 |
 |---|---|
-| [`docs/idea-to-merge.md`](docs/idea-to-merge.md) | ★ 全景工作流(主线文档)+ 防复发一章 + 规则库 A1–A16 |
+| [`docs/beginner.md`](docs/beginner.md) | 🌱 新手入门(第 0–3 级 + CLI 还是桌面版) |
+| [`docs/idea-to-merge.md`](docs/idea-to-merge.md) | ★ 进阶:全景工作流(主线文档)+ 防复发一章 + 规则库 A1–A16 |
 | [`docs/flowcharts.md`](docs/flowcharts.md) | 六张详细流程图 |
 | [`docs/workflow.md`](docs/workflow.md) | 互审七步循环逐步详解 |
 | [`docs/setup.md`](docs/setup.md) | 装 Codex CLI + 让 CC 内部调用它 |
 | [`docs/why-it-works.md`](docs/why-it-works.md) | 互审为什么这么设计 / 什么时候别用 |
 | [`conventions/`](conventions/) | 裁决格式 + 审查方选择 / 通用红线 R1–R6 / 真值层级 + 完成层级 + 装载三层 |
-| [`templates/`](templates/) | 工单(原话区 + 复述表 + 验证判据 + 空窗防护)/ handoff(范围守恒 + 装载守恒 + 验收两栏)/ review checklist / 总调度 skill 骨架 / 收工 checklist 骨架 |
+| [`templates/`](templates/) | 入门版 CLAUDE.md / 工单(原话区 + 复述表 + 验证判据 + 空窗防护)/ handoff(范围守恒 + 装载守恒 + 验收两栏)/ review checklist / 总调度 skill 骨架 / 收工 checklist 骨架 |
 | [`AGENTS.md`](AGENTS.md) | Codex 审查方规约(拷进你项目根目录,Codex 自动读) |
 | [`for-claude-code.md`](for-claude-code.md) | 互审机看版(整份丢给你的 CC) |
 | [`examples/`](examples/) | 一个完整走查的例子,含一次「打回→改→通过」 |
