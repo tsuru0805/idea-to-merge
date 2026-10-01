@@ -1,8 +1,6 @@
 # idea-to-merge · 从一个想法到合并上线
 
-> 你跟 Claude Code(下面叫 **CC**)结对写代码。这个仓库回答一个问题:**一个想法从人嘴里说出来,到代码合并、部署、验收、关单,中间应该走哪些流程,才能又快又不失控?** 内容来自我们家一个真实项目(24/7 Mac mini 上的个人系统,常年多 session 并行开发)每天在跑的工作流,每条规矩背后都是一次真实翻车。
-
-## 🗺 全景:一个想法从提出到关单
+你跟 Claude Code(下面叫 **CC**)结对写代码。这个仓库讲:**一个想法从说出口,到代码合并、上线、验收、关单,中间该走哪些流程,才能又快又不失控。** 内容来自一个 24/7 跑在 Mac mini 上的个人系统,每条规矩背后都是一次真实翻车。
 
 ```mermaid
 flowchart TD
@@ -19,6 +17,10 @@ flowchart TD
     I --> J(["关单"])
 ```
 
+### 👉 最干货的部分从这里读:[一个想法的一生](docs/idea-to-merge.md#ⅰ--一个想法的一生)
+
+上面这张图里每一步的规矩——需求怎么提、方案怎么审、代码怎么落、怎么上线、怎么验收、怎么收工——都在这一章往下。
+
 **这条线怎么走:**
 
 1. 你提一个想法。CC 先用自己的话**复述**你要什么,再写**方案**。方案先让另一个 AI 挑一遍毛病(图里的「设计审」)。
@@ -28,65 +30,26 @@ flowchart TD
 
 三个 🚪 是只有你能拍板的地方。其余的检查,交给流程和另一个 AI。
 
-## 从哪开始读
+## 其他入口
 
-| 你是 | 读这个 |
-|---|---|
-| 🌱 第一次用 CC,或者没有工程背景 | **[新手入门 `docs/beginner.md`](docs/beginner.md)**:怎么跟 CC 说话、怎么下需求、权限弹窗怎么点,按台阶从第 0 级爬到第 3 级;还有一节讲 CLI 和桌面版怎么选。配一个 7 条规矩的[入门版 CLAUDE.md 模板](templates/CLAUDE.beginner.md)。 |
-| 🗺 已经和 CC 结对了一阵子,被「并行乱、文档烂、额度爆、收尾散」困扰 | **[进阶 · 全景手册 `docs/idea-to-merge.md`](docs/idea-to-merge.md)**:上面那条线每一段的完整规矩,加「踩坑以后怎么防复发」和十六条按需取用的规则库(A1–A16)。 |
-
-进阶手册是**规则库,不是必须整包安装的框架**:每条规则独立成块、标好适用前提(「多 session 才需要」「有自动部署才需要」「有生产数据才需要」……),你按自己的情况挑。怎么挑,见手册开头的[「怎么用这个仓」](docs/idea-to-merge.md#怎么用这个仓)。
-
-## 进阶手册里有什么
-
-**→ [`docs/idea-to-merge.md`](docs/idea-to-merge.md)**
-
-从想法进门到下一棒接手的全流程:两权分立、需求复述闸、节奏约束、工单系统(原话区/占号/溯源/验证判据/空窗防护)、worktree 纪律、审查方选择、红线两层闸、按部署成本选发车窗口、功能 AI 自核 + 人只验体感、收工 checklist(范围守恒/装载守恒/文档递审)、skill 体系、总调度模式、子 session vs 子 agent 的额度经济学、模型三档调配、文档防烂协议、跨模型的身份延续。
-
-另有两章新增:
-- **踩坑以后怎么防复发**(第 14 章):事故 → 止血 → 查病根 → 写成可测规则 → 落成会拦人的守卫 → 收工自查 → 规则维护;附九个我们家已落地守卫的脱敏通用形态(源码不在本仓)。
-- **规则库 A1–A16**(第 15 章):十六条独立规则,每条「规则 + 为什么 + 怎么落地」,带适用前提标签。
-
-## 📊 流程图
-
-**→ [`docs/flowcharts.md`](docs/flowcharts.md)**
-
-开头一张一页总览,再加六组流程图(GitHub 原生支持 Mermaid 渲染;每组先给一张人看的小图,详细图折叠在「展开」里;图 ③ 的详细图拆成两张):① 从想法到关单的总览(三个人类节点、所有审查环和回退边)/ ② 单个执行棒的内部流程 / ③ 总调度多 session 统筹 / ④ 部署与发布 / ⑤ 踩坑防复发闭环 / ⑥ 收工。每张图下面有一段「怎么读」。
-
-## 🔍 专题:给 CC 配个监工(Codex 互审)
-
-全景流程中间那段「设计审 → 落码 → 代码审」的完整拆解——引入一个不同血统的 AI 给 CC 做自动 review,审到过才放行,你只当裁判,不当 debugger。
-
-**这部分可以独立使用**:看完觉得能用,把下面「给 agent 看的」里的[机看版 `for-claude-code.md`](for-claude-code.md)整个丢给你的 CC,它读完就知道怎么走。
-
-### 什么时候你需要互审
-
-1. **CC 抛一堆技术方案,你分辨不了优劣**,只能听它信口雌黄,点头说「那就这样吧」。
-2. **你提个需求,CC 改了一大堆**,中间偷偷动了俩变量,代码直接瘫了——你还不知道是哪动的。
-3. **CC 嘴上说做 A,实际代码改的 B**,你肉眼根本检查不出来。
-4. **你和 CC 脑暴鬼打墙**:这边补上、那边又漏,工程半天推不动。
-   (这种时候,直接叫 CC 把你俩的痛点列出来,丢给 Codex 去掰扯。)
-
-只要中了一条,这套就是给你的。
-
-> 💴 **成本**:Codex 订阅档(大约 3000 日元/月,按你所在区/档位而定)日常够用;review 思考深度开【中】就行。
-> 也可以用 OpenAI 官方的 [codex-plugin-cc](https://github.com/openai/codex-plugin-cc) 插件(计费走 ChatGPT 订阅或 API key),或者干脆用订阅内的另一档 Claude 模型当审查方(不新增账单)——见全景文档第 5 章。
-
----
+- 🌱 **第一次用 CC,或者没有工程背景** → [新手入门](docs/beginner.md):怎么跟 CC 说话、怎么下需求、权限弹窗怎么点,从第 0 级爬到第 3 级;配一个[入门版 CLAUDE.md 模板](templates/CLAUDE.beginner.md)。
+- 🧰 **多 session 并行、长期维护** → 进阶手册的后半部分:[规模化运行](docs/idea-to-merge.md#ⅱ--规模化运行多棒并行)、[踩坑以后怎么防复发](docs/idea-to-merge.md#14--踩坑以后怎么防复发)、[十六条按需取用的规则库](docs/idea-to-merge.md#15--a1a16)。每条规则标了适用前提,按自己的情况挑([标签说明](docs/reference.md#怎么用这个仓))。
+- 📊 **流程图** → [一页总览 + 六组流程图](docs/flowcharts.md),人看的小图在前,详细图折叠在「展开」里。
+- 🔍 **只想给 CC 配个 AI 审查员** → [互审七步循环](docs/workflow.md):另一个 AI 审到过才放行,你只当裁判。下面任一条中了就值得用:CC 抛一堆方案你分不清优劣;它改了一大堆、偷偷动了别的地方;嘴上说做 A、实际改了 B;你俩来回补丁鬼打墙。成本:Codex 订阅档(约 3000 日元/月,按地区和档位而定)日常够用,也可以用订阅内另一档 Claude 模型当审查方,不新增账单。
+- 📖 **词表 / 标签 / 全景大图** → [参考页](docs/reference.md)。
 
 ## 仓库地图
 
 | 位置 | 内容 |
 |---|---|
-| [`docs/beginner.md`](docs/beginner.md) | 🌱 新手入门(第 0–3 级 + CLI 还是桌面版) |
-| [`docs/idea-to-merge.md`](docs/idea-to-merge.md) | ★ 进阶:全景工作流(主线文档)+ 防复发一章 + 规则库 A1–A16 |
-| [`docs/flowcharts.md`](docs/flowcharts.md) | 流程图:一页总览 + 六组(每组先小图,详细图折叠) |
-| [`docs/workflow.md`](docs/workflow.md) | 互审七步循环逐步详解 |
-| [`docs/setup.md`](docs/setup.md) | 装 Codex CLI + 让 CC 内部调用它 |
-| [`docs/why-it-works.md`](docs/why-it-works.md) | 互审为什么这么设计 / 什么时候别用 |
-| [`conventions/`](conventions/) | 裁决格式 + 审查方选择 / 通用红线 R1–R6 / 真值层级 + 完成层级 + 装载三层 |
-| [`templates/`](templates/) | 入门版 CLAUDE.md / 工单(原话区 + 复述表 + 验证判据 + 空窗防护)/ handoff(范围守恒 + 装载守恒 + 验收两栏)/ review checklist / 总调度 skill 骨架 / 收工 checklist 骨架 |
-| [`examples/`](examples/) | 一个完整走查的例子,含一次「打回→改→通过」 |
+| [`docs/idea-to-merge.md`](docs/idea-to-merge.md) | ★ 进阶手册:从「一个想法的一生」开始的全流程规矩 + 防复发 + 规则库 A1–A16 |
+| [`docs/beginner.md`](docs/beginner.md) | 🌱 新手入门 |
+| [`docs/flowcharts.md`](docs/flowcharts.md) | 流程图 |
+| [`docs/reference.md`](docs/reference.md) | 参考页:标签说明、三个人类节点、词表、全景大图 |
+| [`docs/workflow.md`](docs/workflow.md) · [`docs/setup.md`](docs/setup.md) · [`docs/why-it-works.md`](docs/why-it-works.md) | AI 互审:七步循环 / 安装与调用 / 为什么这么设计 |
+| [`templates/`](templates/) | 入门版 CLAUDE.md、工单、handoff、审查 checklist、总调度和收工的 skill 骨架 |
+| [`conventions/`](conventions/) | 裁决格式与审查方选择、通用红线、真值层级与完成层级 |
+| [`examples/`](examples/) | 一个完整走查的例子 |
 
 ## 🤖 给 agent 看的
 
