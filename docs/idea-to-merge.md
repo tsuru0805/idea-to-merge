@@ -436,7 +436,7 @@ Claude Code 的 skill 机制:`.claude/skills/<name>/SKILL.md`,frontmatter 里写
 
 - 动共享文件前先向其他在途 session 打招呼认领;**发消息 ≠ 认领成功,收到回执确认无撞才动手**——消息可能根本没被读到。
 - **session 之间怎么发消息**(按官方文档核过,版本更新后以官方为准):
-  - **CLI**:Claude Code v2.1.224 起(macOS / Linux / WSL 2;Windows 原生 v2.1.234 起),同一台电脑上的 session 之间可以直接发消息,默认开启;Claude 用 `ListAgents` 找对象、`SendMessage` 发送,你只要说「告诉 @某某 session ……」。输入 `/list-agents`(`/peers`)可检查功能是否可用。
+  - **CLI**:Claude Code v2.1.224 起(macOS / Linux / WSL 2;Windows 原生 v2.1.234 起),同一台电脑上的 session 之间可以直接发消息,默认开启;Claude 用 `ListAgents` 找对象、`SendMessage` 发送。用 `@会话名` 指定对象要 v2.1.232 起;经第三方云平台接入、或关了功能开关拉取的,同机发消息要 v2.1.248 起。输入 `/list-agents`(`/peers`)可检查功能是否可用。
   - **桌面版**:有自己的跨会话功能,能查看并给**桌面版里的**其他会话发消息(显示为带来源的卡片),但看不到终端里的 CLI 会话;和 CLI 会话互通走上面那套通用跨会话消息。
   - 两种都只传纯文本,不传对话历史或文件;收到消息的 session 仍按它自己的权限规则行事。
 - 契约中途变更,立刻通知受影响的棒,别等它做完再返工。
