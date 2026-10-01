@@ -51,7 +51,7 @@ Builder 先不写代码,把工单 + 方案 `codex exec` 给 Reviewer:
 
 ```bash
 codex exec --sandbox read-only \
-  "这是工单和方案(见上)。按 AGENTS.md 审设计:有什么坑、边界有没有说清。"
+  "这是工单和方案(见上)。按 AGENTS.md 审设计:有什么坑、边界有没有说清。" < /dev/null
 ```
 
 Reviewer 回:
@@ -153,8 +153,8 @@ codex 回执:首审阻断(缺无参回归用例 + 端点语义未定),
 Builder:「recall 时间过滤做完了。完成层级:代码 ✅ 测试 ✅ 已 commit ✅,运行时**没验**(没起服务真跑一次)。要收工吗?」
 你:「收工。」
 
-Builder 写 handoff(见 [`../templates/handoff.md`](../templates/handoff.md)),handoff 草稿再过一次 Reviewer
-——它会盯「有没有把『没验运行时』悄悄写成『已上线』」。过了,合并 `feature/recall-time-filter`。
+Builder 走收工 checklist:写 handoff(见 [`../templates/handoff.md`](../templates/handoff.md))、更新工单状态、刷看板,
+然后把这批收工文档整批再过一次 Reviewer——它会盯「有没有把『没验运行时』悄悄写成『已上线』」。过了,合并 `feature/recall-time-filter`。
 
 ---
 

@@ -59,6 +59,19 @@ to be clean before reviewing. **Review only the target packet**: the named diff,
 staged files, or explicitly named draft. Do not expand into a full dirty-tree cleanup or
 repo-wide investigation.
 
+## Sandbox Limits
+
+Codex usually runs in a sandbox. It may be unable to see per-user service managers,
+background jobs, local ports, or production databases. When a claim depends on runtime
+facts the sandbox cannot reach:
+
+- Do **not** report "service not loaded" / "port unreachable" / "process missing" as a
+  blocking item based only on what the sandbox sees. Report it as
+  **unverifiable in this environment** and name the exact command a reviewer with real
+  environment access should run.
+- Recommend that runtime-state packets be reviewed by a reviewer that can reach the real
+  environment.
+
 ## Truth Hierarchy
 
 When claims conflict, use this hierarchy (higher overrides lower):
@@ -96,6 +109,16 @@ When reviewing handoff or current-state drafts, **reject or request correction**
 - Unverified work is written as closed-loop completion.
 - User-feel verification is claimed before the user has verified.
 - The same agent writes and reviews its own claims as if independently verified.
+- "Loaded" / "live" is claimed without all three layers of evidence: process start time
+  after the deploy, every repo's HEAD equal to the pinned commit, and one real production
+  output per shipped item.
+- Simulator / test verification is written as user verification; a prime suspect is written
+  as a confirmed root cause; a candidate fix is written as a root fix.
+- A scope item that was approved earlier is silently dropped, postponed, or moved to
+  "later / phase two" without being named.
+
+Shutdown documents (handoff, board changes, ticket updates) are reviewed like code. There is
+no "docs-only, low risk" exemption.
 
 ## Fixed Output Format
 
@@ -120,6 +143,10 @@ Return **阻断 (block)** when the packet, as written, would create a false or u
 - Implies a whole-repo clean state when only a target packet was reviewed.
 - Treats an agent summary as stronger than current code / diff / runtime output.
 - Lets the same agent self-review its own completion claims as independent verification.
+- Ships a fix for a confirmed production problem that waits for a deploy window, with no
+  "gap protection" line (mitigation, or an explicit "cannot mitigate + expected impact"
+  sent to the user to decide).
+- Introduces a user- or agent-triggerable action whose failure is silent (no visible receipt).
 
 Return **需改后通过 (pass-after-fix)** when the underlying change is acceptable but the
 wording or verification layers must be corrected first.

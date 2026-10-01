@@ -3,7 +3,7 @@
 这套循环有两个角色 + 一个人:
 
 - **Builder(做工方)** = Claude Code。读代码、写代码、commit、push、写工单和 handoff。
-- **Reviewer(审查方)** = Codex,经 `codex exec` 内部调用。只读,只挑刺、只裁决,不动手。
+- **Reviewer(审查方)** = Codex,经 `codex exec` 内部调用。只读,只挑刺、只裁决,不动手。(审查对象涉及运行时实况、或 Codex 额度用完时,换成订阅内子 agent,见下文「审查方怎么选」。)
 - **你(人类)** = 维护者。在两个闸门拍板:提案通过、收工。
 
 > 主线是**内部调用**:Builder 在自己会话里直接 `codex exec` 起 Reviewer,不需要你在两个终端之间搬消息。
@@ -27,8 +27,10 @@ Builder **先不写代码**,把方案 `codex exec` 给 Reviewer 审:
 
 ```bash
 codex exec --sandbox read-only \
-  "这是工单 + 设计方案。按 AGENTS.md 审:架构有什么坑、哪些边界没说清、哪些『轻描淡写』要展开。"
+  "这是工单 + 设计方案。按 AGENTS.md 审:架构有什么坑、哪些边界没说清、哪些『轻描淡写』要展开。" < /dev/null
 ```
+
+> 调用形态:**单独一条、前台跑、末尾加 `< /dev/null`**(否则被后台化时会挂死);默认模型被拒就加 `-m <模型名>`。下面第 6 步那种管道喂 diff 的写法不用改。详见 [setup 第 3 节](setup.md#3-非交互调用codex-exec)。
 
 Reviewer 出裁决(通过 / 需改后通过 / 阻断)。**阻断就改方案、再审**,循环到放行。
 
@@ -55,12 +57,16 @@ git diff --staged | codex exec --sandbox read-only \
 Reviewer 裁决。**阻断 / 需改后通过就改,再审,循环到通过。**
 Reviewer 的回执**要核查、不无脑同意**——Builder 觉得它判断有误,就摆证据二审 / 反驳,目的是把工程推对,不是过关。
 
+**Reviewer 建议的修法,实现之后要回递终审。** 它说「建议改成 X」,Builder 照做了——这份终版实现 Reviewer 还没见过。只自测就合并,等于审查环在最后一步断开。
+
 ## 第 7 步 · 向你汇报(闸门二)+ 收工
 
 Builder 向你汇报:做了什么、核了什么、**哪些没核**(用[完成层级](../conventions/truth-hierarchy.md)说清,别把「代码写完」说成「跑通了」)。
-**你说收工**,Builder 才写 **handoff**(见 [`../templates/handoff.md`](../templates/handoff.md))——交接给下一个会话:做到哪、为什么这么做、踩了什么坑、还差什么。
+**你说收工**,Builder 走[收工 checklist](../templates/skill-shutdown.md):范围守恒自查、装载守恒自查、写 **handoff**(见 [`../templates/handoff.md`](../templates/handoff.md))、刷看板、更新工单……
 
-handoff **再过一次 Reviewer**(它最容易把「打算修的」写成「已修」、把没验证的写成闭环)。过了再合并。
+然后**这一整批收工文档(handoff + 看板改动 + 工单登记段)再过一次 Reviewer**——handoff 最容易把「打算修的」写成「已修」、把没验证的写成闭环;看板和工单最容易留下第二份会漂的副本。**没有免审例外**,「纯文档、低风险」不是跳过的理由。过了,才 commit / push / 合并。
+
+> 这一步和[全景文档的收工 checklist](idea-to-merge.md#73-收工-checklist)是同一件事:那边的「第 7 步 · 收工文档整批递审」就是这里的「再过一次 Reviewer」,顺序都是**先审、后推**。
 
 ---
 
@@ -77,6 +83,16 @@ codex 回执:需改后通过 → 已按裁决补 Z 的边界校验,二审通过�
 ```
 
 git log 不可变、不漂移、零维护。只有刻意的里程碑分析(如大型重构 audit)才值得单独存一个文件。
+
+---
+
+## 审查方怎么选
+
+- **纯代码 diff** → Codex(沙箱、只读、异构血统,对抗性最强)。
+- **涉及运行时实况**(进程、端口、服务管理器、定时任务、真实库)→ 必须交给**能进真实环境**的审查者,比如订阅内的子 agent。沙箱里的审查方看不到这些,会报假阻断,也会漏掉真阻断。
+- **Codex 额度用完** → 订阅内子 agent 兜底,不跳审。
+
+详见 [全景文档 A7](idea-to-merge.md#a7--审查方选择与兜底)。
 
 ---
 
